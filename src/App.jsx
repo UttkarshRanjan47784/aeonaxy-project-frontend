@@ -7,15 +7,17 @@ import { RecoilRoot } from 'recoil'
 
 export default function App() {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <RecoilRoot>
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<RegisterPage />}/>
-            <Route path=''/>
-          </Routes>
-        </BrowserRouter>
-      </RecoilRoot>      
-    </ThemeProvider>
+    <div className=''>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <RecoilRoot>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/' element={<RegisterPage />}/>
+              <Route path=''/>
+            </Routes>
+          </BrowserRouter>
+        </RecoilRoot>      
+      </ThemeProvider>
+    </div>
   )
 }
