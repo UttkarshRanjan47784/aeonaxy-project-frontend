@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import RegisterPage from './pages/RegisterPage'
 import { ThemeProvider } from './components/theme-provider'
 import { RecoilRoot } from 'recoil'
+import CreateProfile from './pages/CreateProfile'
 
 
 export default function App() {
@@ -13,7 +14,7 @@ export default function App() {
           <BrowserRouter>
             <Routes>
               <Route path='/' element={<RegisterPage />}/>
-              <Route path=''/>
+              <Route path='/createprofile' element={<CreateProfile />}/>
             </Routes>
           </BrowserRouter>
         </RecoilRoot>      

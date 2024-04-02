@@ -10,9 +10,9 @@ export default function LeftContainer() {
   const iTheme = useRecoilValue(imgTheme);
 
   return (
-    <div className='p-5 bg-cover bg-bottom hidden md:block md:col-span-2'
+    <div className='p-3 bg-cover bg-bottom hidden md:block md:col-span-2'
     style={(iTheme == `dark`)?{backgroundImage: `url(${imgdark})`} : {backgroundImage: `url(${imgwhite})`}}>
-
+      <span className='hidden md:inline-block pacifico-regular mr-3 text-3xl'>dribble</span>
     </div>
   )
 }
