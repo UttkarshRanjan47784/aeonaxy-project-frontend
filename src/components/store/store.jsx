@@ -5,4 +5,10 @@ const imgTheme = atom({
     default : localStorage.getItem(`vite-ui-theme`)
 })
 
-export { imgTheme }
+const reasons = atom({
+    key : `reasons`,
+    default : []
+})
+
+
+export { imgTheme, reasons }

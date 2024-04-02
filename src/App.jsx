@@ -4,6 +4,7 @@ import RegisterPage from './pages/RegisterPage'
 import { ThemeProvider } from './components/theme-provider'
 import { RecoilRoot } from 'recoil'
 import CreateProfile from './pages/CreateProfile'
+import ReasonPage from './pages/ReasonPage'
 
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
             <Routes>
               <Route path='/' element={<RegisterPage />}/>
               <Route path='/createprofile' element={<CreateProfile />}/>
+              <Route path='/reason' element={<ReasonPage />}/>
             </Routes>
           </BrowserRouter>
         </RecoilRoot>      

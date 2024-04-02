@@ -12,7 +12,7 @@ export default function LeftContainer() {
   return (
     <div className='p-3 bg-cover bg-bottom hidden md:block md:col-span-2'
     style={(iTheme == `dark`)?{backgroundImage: `url(${imgdark})`} : {backgroundImage: `url(${imgwhite})`}}>
-      <span className='hidden md:inline-block pacifico-regular mr-3 text-3xl'>dribble</span>
+      <span className='hidden md:inline-block pacifico-regular mr-3 text-3xl opacity-70'>dribbble</span>
     </div>
   )
 }

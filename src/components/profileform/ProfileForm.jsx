@@ -13,9 +13,9 @@ export default function ProfileForm() {
 
 
   return (
-    <form className='md:col-span-4 md:grid md:grid-rows-8 px-3'>
+    <form className='md:col-span-5 md:grid md:grid-rows-8 px-3'>
         <div className='md:hidden flex justify-between items-center mb-24'>
-            <span className='pacifico-regular mr-3 text-3xl'>dribble</span>
+            <span className='pacifico-regular mr-3 text-3xl text-primary'>dribbble</span>
             <ModeToggle />
         </div>
         <div className='hidden md:block'></div>
