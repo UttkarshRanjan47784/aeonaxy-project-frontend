@@ -9,7 +9,7 @@ export default function CreateProfile() {
             <span className='pacifico-regular mr-3 text-3xl'>dribble</span>
         </div>
         <ProfileForm />
-        <div className='hidden md:block md:flex justify-end'>
+        <div className='hidden md:flex justify-end'>
             <ModeToggle />
         </div>
     </div>
