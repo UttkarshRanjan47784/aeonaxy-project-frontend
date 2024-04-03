@@ -5,6 +5,7 @@ import { ThemeProvider } from './components/theme-provider'
 import { RecoilRoot } from 'recoil'
 import CreateProfile from './pages/CreateProfile'
 import ReasonPage from './pages/ReasonPage'
+import VerifyEmailPage from './pages/VerifyEmailPage'
 
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
               <Route path='/' element={<RegisterPage />}/>
               <Route path='/createprofile' element={<CreateProfile />}/>
               <Route path='/reason' element={<ReasonPage />}/>
+              <Route path='/verifyemail' element={<VerifyEmailPage />}/>
             </Routes>
           </BrowserRouter>
         </RecoilRoot>      

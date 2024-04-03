@@ -3,6 +3,8 @@ import { Button } from '../ui/button'
 import DefaultPhotoSelector from './DefaultPhotoSelector'
 import { InputB } from '../ui/inputB'
 import ModeToggle from '../mode-toggle'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Camera, User } from 'lucide-react'
 
 export default function ProfileForm() {
 
@@ -26,7 +28,11 @@ export default function ProfileForm() {
         <div className='row-span-3 py-5 space-y-3 my-6 md:my-0 mx-3'>
             <h3 className='font-bold text-lg'>Add an Avatar</h3>
             <div className='grid grid-cols-4 gap-5'>
-                <div className='rounded-full size-24 md:size-36 border-2 border-dashed border-foreground '></div>
+                {/* <div className='rounded-full size-24 md:size-36 border-2 border-dashed border-foreground '></div> */}
+                <Avatar className='size-24 md:size-36 '>
+                    <AvatarImage src="https://gitub.com/shadcn.png" />
+                    <AvatarFallback className='border-2 border-dashed border-foreground'><Camera className='text-muted-foreground opacity-75 size-10'/></AvatarFallback>
+                </Avatar>
                 <div className='col-span-3 space-y-4'>
                     <Button variant="ghost2" className='ml-10' onClick={handleNewPhoto} >Choose image</Button>
                     <br />
