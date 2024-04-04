@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import RegisterPage from './pages/RegisterPage'
 import { ThemeProvider } from './components/theme-provider'
@@ -6,9 +6,11 @@ import { RecoilRoot } from 'recoil'
 import CreateProfile from './pages/CreateProfile'
 import ReasonPage from './pages/ReasonPage'
 import VerifyEmailPage from './pages/VerifyEmailPage'
+import axios from 'axios'
 
 
 export default function App() {
+
   return (
     <div className=''>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
