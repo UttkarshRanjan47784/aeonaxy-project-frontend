@@ -10,14 +10,22 @@ const reasons = atom({
     default : []
 })
 
-const profilePicURL = atom({
-    key: `profilePicURL`,
-    default : ``
-})
-
 const requiredInfo = atom({
     key : `requiredInfo`,
-    default : null
+    default : {
+        name : ``,
+        email : ``,
+        username : ``,
+        password : ``,
+    }
 })
 
-export { imgTheme, reasons, profilePicURL, requiredInfo }
+const optionalInfo = atom({
+    key : `optionalInfo`,
+    default : {
+        profileURL : ``,
+        location : ``
+    }
+})
+
+export { imgTheme, reasons, requiredInfo, optionalInfo }

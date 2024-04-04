@@ -5,13 +5,16 @@ import { Card, CardContent, CardFooter } from '../ui/card'
 import imgwhite2 from '../../assets/imgwhite2.jpg'
 import imgdark from '../../assets/imgdark.jpg'
 import { Checkbox } from '../ui/checkbox'
-import { imgTheme, reasons } from '../store/store';
+import { imgTheme, optionalInfo, reasons, requiredInfo } from '../store/store';
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 export default function ReasonForm() {
     const iTheme = useRecoilValue(imgTheme);
     const [selectedReason, setSelectedReason] = useRecoilState(reasons)
+    const reqInfo = useRecoilValue(requiredInfo);
+    const extraInfo = useRecoilValue(optionalInfo);
     const navigate = useNavigate()
 
     const handleReason1 = (event) => {
@@ -62,7 +65,20 @@ export default function ReasonForm() {
         }
     }
 
-    const handleGoToVerifyEmail = (event) => {event.preventDefault(); navigate(`/verifyemail`)}
+    const handleGoToVerifyEmail = async (event) => {
+        event.preventDefault();
+        let completeInfo = {
+            ...reqInfo, 
+            ...extraInfo,
+            reasons : [...selectedReason]
+        }
+        let response = await axios.post(`http://localhost:5000/reason`, completeInfo)
+        if (response.data.stat)
+            navigate(`/verifyemail`);
+        else{
+            alert(`Error : ${response.data.msg}`)
+        }
+    }
     
 
   return (
@@ -107,15 +123,15 @@ export default function ReasonForm() {
             <Card className={selectedReason.includes(3)?"pt-2 max-h-96 grid grid-rows-8 border-primary border-2":"pt-2 max-h-96 grid grid-rows-4"}>
                 <CardContent className={selectedReason.includes(3)?'space-y-3 row-span-7': 'space-y-3 row-span-3'}>
                     <img src={(iTheme == `dark`)?imgdark : imgwhite2} 
-                    className={selectedReason.includes(3)?'h-48 w-52 mx-auto -translate-y-8': 'h-48 w-52 mx-auto'}/>
+                    className={selectedReason.includes(3)?'h-48 w-52 mx-auto -translate-y-8 ': 'h-48 w-52 mx-auto '}/>
                     
                     <div className={selectedReason.includes(3)?'font-bold text-sm md:text-base -translate-y-8 -mt-10' : 'font-bold text-sm md:text-base'}>
                         I'm a designer looking to share my work
                     </div>
                     <div className={selectedReason.includes(3)?'text-[0.6rem] lg:text-xs -my-8 md:-translate-y-8' : `hidden`}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a erat sit amet mi viverra.</div>
                 </CardContent>
-                <CardFooter className='flex justify-center items-center relative'>
-                    <Checkbox onCheckedChange={handleReason3} className='rounded-full mt-5'></Checkbox>
+                <CardFooter className='flex justify-center items-center'>
+                    <Checkbox onCheckedChange={handleReason3} className='rounded-full'></Checkbox>
                 </CardFooter>
             </Card>
         </div>

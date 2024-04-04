@@ -7,25 +7,45 @@ import {
 import { ChevronRight } from "lucide-react"
 import React from 'react'
 import { useSetRecoilState } from "recoil"
-import { profilePicURL } from "../store/store"
+import { optionalInfo, profilePicURL } from "../store/store"
 
 export default function DefaultPhotoSelector() {
 
-  const setPicLink = useSetRecoilState(profilePicURL)
+  const setPicLink = useSetRecoilState(optionalInfo)
 
   const handleSelect = (event) => {
     switch(event.target.innerText){
       case "Rick and Morty" : console.log(1)
-        setPicLink("https://github.com/shadcn.png")
+        setPicLink((prev) => {
+          return {
+            ...prev,
+            profileURL : "https://github.com/shadcn.png"
+          }
+        })
       break
       case "Baby Yoda" : console.log(2)
-        setPicLink("https://github.com/shadcn.png")
+        setPicLink((prev) => {
+          return {
+            ...prev,
+            profileURL : "https://github.com/shadcn.png"
+          }
+        })
       break
       case "Anonymous" : console.log(3)
-        setPicLink("https://github.com/shadcn.png")
+        setPicLink((prev) => {
+          return {
+            ...prev,
+            profileURL : "https://github.com/shadcn.png"
+          }
+        })
       break
       case "Cowboy" : console.log(4)
-        setPicLink("https://github.com/shadcn.png")
+        setPicLink((prev) => {
+          return {
+            ...prev,
+            profileURL : "https://github.com/shadcn.png"
+          }
+        })
       break
     }
   }

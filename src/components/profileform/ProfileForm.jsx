@@ -6,25 +6,40 @@ import ModeToggle from '../mode-toggle'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Camera } from 'lucide-react'
 import { useRecoilState } from 'recoil'
-import { profilePicURL } from '../store/store'
+import { optionalInfo } from '../store/store'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 export default function ProfileForm() {
 
-    const fileBrowse = useRef(null)
-
-    const [picLink, setPicLink] = useRecoilState(profilePicURL)
-
-    const navigate = useNavigate()
+    const fileBrowse = useRef(null);
+    const [extraInfo, setExtraInfo] = useRecoilState(optionalInfo);
+    const navigate = useNavigate();
 
     const handleOpenExplorer = (event) => {
         event.preventDefault()
         fileBrowse.current.click()
     }
     const handleNewPhoto = (event) => {
-        setPicLink(URL.createObjectURL(event.target.files[0]))
+        setExtraInfo((prev) => {
+            return {
+                ...prev,
+                profileURL : URL.createObjectURL(event.target.files[0])
+            }
+        })
     }
-    const handleGoToReasons = (event) => {event.preventDefault(); navigate(`/reason`)}
+    const handleGoToReasons = async (event) => {
+        event.preventDefault();
+        // let response  = await axios.post()
+        navigate(`/reason`);
+    }
+
+    const handleLocChange = (event) => { setExtraInfo((prev) => {
+        return {
+            ...prev,
+            location : event.target.value
+        }
+    }) }
 
 
   return (
@@ -42,7 +57,7 @@ export default function ProfileForm() {
             <h3 className='font-bold text-lg'>Add an Avatar</h3>
             <div className='grid grid-cols-4 gap-5'>
                 <Avatar className='size-24 md:size-36 '>
-                    <AvatarImage src={picLink} />
+                    <AvatarImage src={extraInfo.profileURL} />
                     <AvatarFallback className='border-2 border-dashed border-foreground'><Camera className='text-muted-foreground opacity-75 size-10'/></AvatarFallback>
                 </Avatar>
                 <div className='col-span-3 space-y-4'>
@@ -56,8 +71,9 @@ export default function ProfileForm() {
         </div>
         <div className='row-span-3 my-10 md:my-0 mx-3'>
             <h3 className='font-bold text-lg'>Add your Location</h3>
-            <InputB placeholder='Enter a location' className='mt-6' />
-            <Button className='mt-8 w-36' disabled={picLink.length == 0} onClick={handleGoToReasons}>Next</Button>
+            <InputB placeholder='Enter a location' className='mt-6'  value={extraInfo.location}
+            onChange={handleLocChange} />
+            <Button className='mt-8 w-36' disabled={extraInfo.profileURL.length == 0} onClick={handleGoToReasons}>Next</Button>
         </div>
     </form>
   )

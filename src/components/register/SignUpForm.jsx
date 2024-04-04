@@ -51,7 +51,6 @@ export default function SignUpForm() {
     const handleGoToCreateProfile = async (event) => {
         event.preventDefault();
         if(name.length == 0){
-            alert(`Name`);
             setErr({
                 stat: true,
                 msg: `name`
@@ -60,7 +59,6 @@ export default function SignUpForm() {
         }
         console.log(name)
         if( username.length == 0){
-            alert(`Username`)
             setErr({
                 stat: true,
                 msg: `username`
@@ -68,7 +66,6 @@ export default function SignUpForm() {
             return;
         }
         if(email.length == 0){
-            alert(`Email`)
             setErr({
                 stat: true,
                 msg: `email`
@@ -76,7 +73,6 @@ export default function SignUpForm() {
             return;
         }
         if (!ValidateEmail(email)){
-            alert(`Email`)
             setErr({
                 stat: true,
                 msg: `email`
@@ -84,7 +80,6 @@ export default function SignUpForm() {
             return;
         }
         if(password.length < 6){
-            alert(`Password`)
             setErr({
                 stat: true,
                 msg: `password`
