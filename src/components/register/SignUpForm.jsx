@@ -4,11 +4,17 @@ import { Input } from '../ui/input'
 import { TriangleAlert } from 'lucide-react'
 import { Label } from '../ui/label'
 import { Checkbox } from '../ui/checkbox'
+import { useNavigate } from 'react-router-dom'
 
 export default function SignUpForm() {
 
     const [err, setErr] = useState(false);
     const errString = (err)? 'size-5 mr-1 inline-block' : 'hidden size-5 mr-1 inline-block'
+    const [agree, setAgree] = useState(false)
+    const navigate = useNavigate()
+
+    const handleEnable = (event) => { setAgree(event) }
+    const handleGoToCreateProfile = (event) => {event.preventDefault(); navigate(`/createprofile`)}
 
   return (
     <form className='px-10 py-3 md:px-32'>
@@ -34,15 +40,15 @@ export default function SignUpForm() {
         </div>
         <div className='my-3'>
             <div className='flex items-start space-x-3'>
-                <Checkbox />
+                <Checkbox onCheckedChange={handleEnable} />
                 <div className='grid gap-2'>
                     <Label className=''>Agree to Terms</Label>
                     <p className='text-xs text-muted-foreground'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a erat sit amet mi viverra dapibus id eget quam. Fusce in magna leo. Aenean aliquet mauris sit amet hendrerit auctor.</p>
                 </div>
             </div>
         </div>
-        <Button className='w-1/2 my-3'>Sign Up</Button>
-        <div className='my-3 text-xs'>Disclaimer : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a erat sit amet mi viverra dapibus id eget quam. Fusce in magna leo. Aenean aliquet mauris sit amet hendrerit auctor. Vestibulum scelerisque quis ante et cursus. Suspendisse dignissim imperdiet dui in malesuada. </div>
+        <Button className='w-1/2 my-3' disabled={(agree == false)} onClick={handleGoToCreateProfile}>Sign Up</Button>
+        <div className='my-3 text-xs'>Disclaimer : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a erat sit amet mi viverra dapibus id eget quam. Fusce in magna leo. Aenean aliquet mauris sit amet hendrerit auctor. </div>
     </form>
   )
 }

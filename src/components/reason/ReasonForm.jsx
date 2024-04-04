@@ -7,10 +7,12 @@ import imgdark from '../../assets/imgdark.jpg'
 import { Checkbox } from '../ui/checkbox'
 import { imgTheme, reasons } from '../store/store';
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useNavigate } from 'react-router-dom'
 
 export default function ReasonForm() {
     const iTheme = useRecoilValue(imgTheme);
     const [selectedReason, setSelectedReason] = useRecoilState(reasons)
+    const navigate = useNavigate()
 
     const handleReason1 = (event) => {
         if (event){
@@ -60,6 +62,9 @@ export default function ReasonForm() {
         }
     }
 
+    const handleGoToVerifyEmail = (event) => {event.preventDefault(); navigate(`/verifyemail`)}
+    
+
   return (
     <form className='md:col-span-6 md:grid md:grid-rows-8 px-3 text-center pb-10 md:pb-0 md:mt-10'>
         <div className='md:hidden flex justify-between items-center mb-24'>
@@ -74,7 +79,7 @@ export default function ReasonForm() {
             <Card className={selectedReason.includes(1)?"pt-2 max-h-96 grid grid-rows-8 border-primary border-2":"pt-2 max-h-96 grid grid-rows-4"}>
                 <CardContent className={selectedReason.includes(1)?'space-y-3 row-span-7': 'space-y-3 row-span-3'}>
                     <img src={(iTheme == `dark`)?imgdark : imgwhite2} 
-                    className={selectedReason.includes(1)?'h-48 w-52 mx-auto -translate-y-8': 'h-48 w-52 mx-auto'}/>
+                    className={selectedReason.includes(1)?'h-48 w-52 mx-auto -translate-y-8 ': 'h-48 w-52 mx-auto '}/>
                     
                     <div className={selectedReason.includes(1)?'font-bold text-sm md:text-base -translate-y-8 -mt-10' : 'font-bold text-sm md:text-base'}>
                         I'm a designer looking to share my work
@@ -88,14 +93,14 @@ export default function ReasonForm() {
             <Card className={selectedReason.includes(2)?"pt-2 max-h-96 grid grid-rows-8 border-primary border-2":"pt-2 max-h-96 grid grid-rows-4"}>
                 <CardContent className={selectedReason.includes(2)?'space-y-3 row-span-7': 'space-y-3 row-span-3'}>
                     <img src={(iTheme == `dark`)?imgdark : imgwhite2} 
-                    className={selectedReason.includes(2)?'h-48 w-52 mx-auto -translate-y-8': 'h-48 w-52 mx-auto'}/>
+                    className={selectedReason.includes(2)?'h-48 w-52 mx-auto -translate-y-8 ': 'h-48 w-52 mx-auto '}/>
                     
                     <div className={selectedReason.includes(2)?'font-bold text-sm md:text-base -translate-y-8 -mt-10' : 'font-bold text-sm md:text-base'}>
                         I'm a designer looking to share my work
                     </div>
                     <div className={selectedReason.includes(2)?'text-[0.6rem] lg:text-xs -my-8 md:-translate-y-8' : `hidden`}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a erat sit amet mi viverra.</div>
                 </CardContent>
-                <CardFooter className=' self-end flex justify-center items-center'>
+                <CardFooter className='flex justify-center items-center'>
                     <Checkbox onCheckedChange={handleReason2} className='rounded-full'></Checkbox>
                 </CardFooter>
             </Card>
@@ -116,7 +121,8 @@ export default function ReasonForm() {
         </div>
         <div>
             <div className={(selectedReason.length == 0)? `hidden font-bold mb-3` : `font-bold mb-3`}>Anything else? You can select multiple</div>
-            <Button className='size-fit px-10' disabled={selectedReason.length == 0}>Finish</Button>
+            <Button className='size-fit px-10' disabled={selectedReason.length == 0}
+            onClick={handleGoToVerifyEmail}>Finish</Button>
         </div>
     </form>
   )

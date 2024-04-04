@@ -36,7 +36,6 @@ export default function Footer() {
                 <div className='font-bold'>Hire designers</div>
                 <div className='text-sm hover:underline'>Post a job opening</div>
                 <div className='text-sm hover:underline'>Post a freelance</div>
-                <div className='text-sm hover:underline'>project</div>
                 <div className='text-sm hover:underline'>Search for designers</div>
                 <div className='text-sm font-bold'>Brands</div>
                 <div className='text-sm hover:underline'>Advertise with us</div>

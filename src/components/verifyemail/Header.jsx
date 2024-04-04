@@ -14,11 +14,14 @@ import {
     SheetTitle,
     SheetTrigger,
   } from "@/components/ui/sheet"
-import { Label } from '@radix-ui/react-dropdown-menu'
-import { Input } from '../ui/input'
+import { useRecoilValue } from 'recoil'
+import { profilePicURL } from '../store/store'
 
 
 export default function Header() {
+
+    const picLink = useRecoilValue(profilePicURL)
+
   return (
     <div className='flex items-center justify-between px-3 border-b border-input h-14'>
         <div className='hidden md:flex items-center h-full'>
@@ -60,7 +63,7 @@ export default function Header() {
             </form>
             <BriefcaseBusiness className='hidden size-7 text-muted-foreground opacity-75'/>
             <Avatar className='size-8'>
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src={picLink} />
                 <AvatarFallback><User className='text-muted-foreground opacity-75'/></AvatarFallback>
             </Avatar>
             <Button className='hidden md:flex'>Upload</Button>

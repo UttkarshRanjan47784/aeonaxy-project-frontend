@@ -10,5 +10,9 @@ const reasons = atom({
     default : []
 })
 
+const profilePicURL = atom({
+    key: `profilePicURL`,
+    default : ``
+})
 
-export { imgTheme, reasons }
+export { imgTheme, reasons, profilePicURL }

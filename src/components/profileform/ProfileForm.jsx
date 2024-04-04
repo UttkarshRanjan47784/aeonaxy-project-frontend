@@ -1,17 +1,30 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Button } from '../ui/button'
 import DefaultPhotoSelector from './DefaultPhotoSelector'
 import { InputB } from '../ui/inputB'
 import ModeToggle from '../mode-toggle'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { Camera, User } from 'lucide-react'
+import { Camera } from 'lucide-react'
+import { useRecoilState } from 'recoil'
+import { profilePicURL } from '../store/store'
+import { useNavigate } from 'react-router-dom'
 
 export default function ProfileForm() {
 
+    const fileBrowse = useRef(null)
 
-    const handleNewPhoto = (event) => {
-        event.preventDefault();
+    const [picLink, setPicLink] = useRecoilState(profilePicURL)
+
+    const navigate = useNavigate()
+
+    const handleOpenExplorer = (event) => {
+        event.preventDefault()
+        fileBrowse.current.click()
     }
+    const handleNewPhoto = (event) => {
+        setPicLink(URL.createObjectURL(event.target.files[0]))
+    }
+    const handleGoToReasons = (event) => {event.preventDefault(); navigate(`/reason`)}
 
 
   return (
@@ -28,13 +41,14 @@ export default function ProfileForm() {
         <div className='row-span-3 py-5 space-y-3 my-6 md:my-0 mx-3'>
             <h3 className='font-bold text-lg'>Add an Avatar</h3>
             <div className='grid grid-cols-4 gap-5'>
-                {/* <div className='rounded-full size-24 md:size-36 border-2 border-dashed border-foreground '></div> */}
                 <Avatar className='size-24 md:size-36 '>
-                    <AvatarImage src="https://gitub.com/shadcn.png" />
+                    <AvatarImage src={picLink} />
                     <AvatarFallback className='border-2 border-dashed border-foreground'><Camera className='text-muted-foreground opacity-75 size-10'/></AvatarFallback>
                 </Avatar>
                 <div className='col-span-3 space-y-4'>
-                    <Button variant="ghost2" className='ml-10' onClick={handleNewPhoto} >Choose image</Button>
+                
+                    <Button variant="ghost2" className='ml-10' onClick={handleOpenExplorer} >Choose image</Button>
+                        <input onChange={handleNewPhoto} id="picture" className="hidden" type="file" ref={fileBrowse} />  
                     <br />
                     <DefaultPhotoSelector />
                 </div>
@@ -43,8 +57,7 @@ export default function ProfileForm() {
         <div className='row-span-3 my-10 md:my-0 mx-3'>
             <h3 className='font-bold text-lg'>Add your Location</h3>
             <InputB placeholder='Enter a location' className='mt-6' />
-            <Button className='mt-8 w-36'>Next</Button>
-
+            <Button className='mt-8 w-36' disabled={picLink.length == 0} onClick={handleGoToReasons}>Next</Button>
         </div>
     </form>
   )
