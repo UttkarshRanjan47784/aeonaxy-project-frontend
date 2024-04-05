@@ -24,7 +24,7 @@ const optionalInfo = atom({
     key : `optionalInfo`,
     default : {
         profileURL : ``,
-        location : ``
+        location : ``,
     }
 })
 

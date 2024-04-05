@@ -1,12 +1,12 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Button } from '../ui/button'
 import DefaultPhotoSelector from './DefaultPhotoSelector'
 import { InputB } from '../ui/inputB'
 import ModeToggle from '../mode-toggle'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Camera } from 'lucide-react'
-import { useRecoilState } from 'recoil'
-import { optionalInfo } from '../store/store'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { optionalInfo, requiredInfo } from '../store/store'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -14,19 +14,47 @@ export default function ProfileForm() {
 
     const fileBrowse = useRef(null);
     const [extraInfo, setExtraInfo] = useRecoilState(optionalInfo);
+    const reqInfo = useRecoilValue(requiredInfo)
     const navigate = useNavigate();
+    const [allow, setAllow] = useState(false)
 
     const handleOpenExplorer = (event) => {
         event.preventDefault()
         fileBrowse.current.click()
     }
-    const handleNewPhoto = (event) => {
-        setExtraInfo((prev) => {
-            return {
-                ...prev,
-                profileURL : URL.createObjectURL(event.target.files[0])
+    const handleNewPhoto = async (event) => {
+        let oldValue = {...extraInfo};
+        try {
+            //frontend update
+            setExtraInfo((prev) => {
+                return {
+                    ...prev,
+                    profileURL : URL.createObjectURL(event.target.files[0])
+                }
+            })
+            //backend
+            const formData = new FormData();
+            formData.append(`file`, event.target.files[0]);
+            formData.append(`username`, reqInfo.username);
+            let response = await axios.post(`http://localhost:5000/uploadprofilepic`, formData)
+            if (response.data.stat){
+                console.log(response.data);
+                setExtraInfo((prev) => {
+                    return {
+                        ...prev,
+                        profileURL : response.data.msg
+                    }
+                })
+                setAllow(true)
             }
-        })
+            if (!response.data.stat){
+                throw new Error(response.data.msg)
+            }
+        } catch (error) {
+            alert(`Op failed : ${error.message}`)
+            setAllow(false);
+            setExtraInfo({...oldValue})
+        }
     }
     const handleGoToReasons = async (event) => {
         event.preventDefault();
