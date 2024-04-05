@@ -20,11 +20,12 @@ export default function VerifyMailMessage() {
   }
 
   const handleResend = async () => {
-    let response = await axios.post(`http://localhost:5000/sendverification`, userInfo)
+    let response = await axios.post(`http://localhost:5000/sendverification`, {})
   }
 
 
   const handleChangeEmail = async () => {
+    let oldValue = {...reqInfo}; //saving old value
     let newEmail = window.prompt(`Enter New Email`);
     if (newEmail.length == 0){
       alert(`No email`);
@@ -34,18 +35,36 @@ export default function VerifyMailMessage() {
       alert(`Invalid email`);
       return;
     }
+    if(newEmail == reqInfo.email){
+      alert(`Old email and new email cannot be same`);
+      return;
+    }
+
+    //frontend update (optimistic rendering)
     setReqInfo((prev)=> {
       return {
         ...prev,
         email : newEmail
       }
     });
-    let response = await axios.post(`http://localhost:5000/sendverification`, {
-      ...reqInfo,
-      ...extraInfo,
-      reasons :  [...reasonList],
-      email : newEmail
-    })
+
+    //backend update
+   try {
+      let response = await axios.post(`http://localhost:5000/emailchange`, {
+        username : reqInfo.username,
+        newEmail : newEmail,
+        verified : false
+      })
+      if (response.data.stat)
+        alert(`Verification mail sent to new email address`);
+      else{
+        throw new Error(response.data.msg)
+      }
+   } catch (error) {
+      //rolling back frontend changes
+      alert(`Operation failed : ${error.message}`);
+      setReqInfo({...oldValue});
+   }
   }
 
   return (

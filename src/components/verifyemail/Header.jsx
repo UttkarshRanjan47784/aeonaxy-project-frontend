@@ -15,12 +15,12 @@ import {
     SheetTrigger,
   } from "@/components/ui/sheet"
 import { useRecoilValue } from 'recoil'
-import { profilePicURL } from '../store/store'
+import { optionalInfo } from '../store/store'
 
 
 export default function Header() {
 
-    const picLink = useRecoilValue(profilePicURL)
+    const extrainfo = useRecoilValue(optionalInfo)
 
   return (
     <div className='flex items-center justify-between px-3 border-b border-input h-14'>
@@ -63,7 +63,7 @@ export default function Header() {
             </form>
             <BriefcaseBusiness className='hidden size-7 text-muted-foreground opacity-75'/>
             <Avatar className='size-8'>
-                <AvatarImage src={picLink} />
+                <AvatarImage src={extrainfo.profileURL} />
                 <AvatarFallback><User className='text-muted-foreground opacity-75'/></AvatarFallback>
             </Avatar>
             <Button className='hidden md:flex'>Upload</Button>

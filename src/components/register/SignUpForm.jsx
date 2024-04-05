@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
-import { TriangleAlert } from 'lucide-react'
+import { TriangleAlert, Ellipsis } from 'lucide-react'
 import { Label } from '../ui/label'
 import { Checkbox } from '../ui/checkbox'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
 import { requiredInfo } from '../store/store'
+
 
 export default function SignUpForm() {
 
@@ -22,6 +23,7 @@ export default function SignUpForm() {
     const [name, setName] = useState(``);
     const [email, setEmail] = useState(``);
     const [password, setPassword] = useState(``);
+    const [loading, setLoding] = useState(false)
 
     const [userInfo, setUserInfo] = useRecoilState(requiredInfo)
 
@@ -57,7 +59,6 @@ export default function SignUpForm() {
             })
             return;
         }
-        console.log(name)
         if( username.length == 0){
             setErr({
                 stat: true,
@@ -97,7 +98,10 @@ export default function SignUpForm() {
             password : password
         }
         let response = await axios.post(`http://localhost:5000/registeruser`, {
-            name : `pookie`
+            name : name,
+            email: email,
+            username : username,
+            password: password
         });
         if (response.data.stat){
             setUserInfo(userReqInfo)
@@ -147,7 +151,7 @@ export default function SignUpForm() {
                 </div>
             </div>
         </div>
-        <Button className='w-1/2 my-3' disabled={(agree == false)} onClick={handleGoToCreateProfile}>Sign Up</Button>
+        <Button className='w-1/2 my-3' disabled={(agree == false)} onClick={handleGoToCreateProfile}>{loading?<Ellipsis />:`Sign Up`}</Button>
         <div className='my-3 text-xs'>Disclaimer : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a erat sit amet mi viverra dapibus id eget quam. Fusce in magna leo. Aenean aliquet mauris sit amet hendrerit auctor. </div>
     </form>
   )

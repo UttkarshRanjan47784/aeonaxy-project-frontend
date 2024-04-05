@@ -70,9 +70,13 @@ export default function ReasonForm() {
         let completeInfo = {
             ...reqInfo, 
             ...extraInfo,
-            reasons : [...selectedReason]
+            reason1 : selectedReason.includes(1),
+            reason2 : selectedReason.includes(2),
+            reason3 : selectedReason.includes(3),
+            verified : false,
         }
-        let response = await axios.post(`http://localhost:5000/reason`, completeInfo)
+        let response = await axios.post(`http://localhost:5000/sendverification`, completeInfo)
+        setSelectedReason([])
         if (response.data.stat)
             navigate(`/verifyemail`);
         else{

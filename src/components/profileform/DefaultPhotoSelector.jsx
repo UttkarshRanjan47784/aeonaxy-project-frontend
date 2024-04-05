@@ -7,7 +7,7 @@ import {
 import { ChevronRight } from "lucide-react"
 import React from 'react'
 import { useSetRecoilState } from "recoil"
-import { optionalInfo, profilePicURL } from "../store/store"
+import { optionalInfo} from "../store/store"
 
 export default function DefaultPhotoSelector() {
 
