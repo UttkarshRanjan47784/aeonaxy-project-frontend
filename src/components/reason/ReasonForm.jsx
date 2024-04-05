@@ -9,6 +9,7 @@ import { imgTheme, optionalInfo, reasons, requiredInfo } from '../store/store';
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import baseurl from '../../../helper.js'
 
 export default function ReasonForm() {
     const iTheme = useRecoilValue(imgTheme);
@@ -75,7 +76,7 @@ export default function ReasonForm() {
             reason3 : selectedReason.includes(3),
             verified : false,
         }
-        let response = await axios.post(`http://localhost:5000/sendverification`, completeInfo)
+        let response = await axios.post(`${baseurl}/sendverification`, completeInfo)
         setSelectedReason([])
         if (response.data.stat)
             navigate(`/verifyemail`);

@@ -9,6 +9,8 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { optionalInfo, requiredInfo } from '../store/store'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import baseurl from '../../../helper.js'
+
 
 export default function ProfileForm() {
 
@@ -36,7 +38,7 @@ export default function ProfileForm() {
             const formData = new FormData();
             formData.append(`file`, event.target.files[0]);
             formData.append(`username`, reqInfo.username);
-            let response = await axios.post(`http://localhost:5000/uploadprofilepic`, formData)
+            let response = await axios.post(`${baseurl}/uploadprofilepic`, formData)
             if (response.data.stat){
                 console.log(response.data);
                 setExtraInfo((prev) => {

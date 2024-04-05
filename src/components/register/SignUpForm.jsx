@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
 import { requiredInfo } from '../store/store'
+import baseurl from '../../../helper.js'
 
 
 export default function SignUpForm() {
@@ -97,7 +98,7 @@ export default function SignUpForm() {
             email : email,
             password : password
         }
-        let response = await axios.post(`http://localhost:5000/registeruser`, {
+        let response = await axios.post(`${baseurl}/registeruser`, {
             name : name,
             email: email,
             username : username,

@@ -3,6 +3,7 @@ import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { optionalInfo, reasons, requiredInfo } from '../store/store'
 import axios from 'axios'
+import baseurl from '../../../helper.js'
 
 export default function VerifyMailMessage() {
 
@@ -20,7 +21,7 @@ export default function VerifyMailMessage() {
   }
 
   const handleResend = async () => {
-    let response = await axios.post(`http://localhost:5000/sendverification`, {})
+    let response = await axios.post(`${baseurl}/sendverification`, {})
   }
 
 
@@ -50,7 +51,7 @@ export default function VerifyMailMessage() {
 
     //backend update
    try {
-      let response = await axios.post(`http://localhost:5000/emailchange`, {
+      let response = await axios.post(`${baseurl}/emailchange`, {
         username : reqInfo.username,
         newEmail : newEmail,
         verified : false
