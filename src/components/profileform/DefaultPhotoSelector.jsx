@@ -27,7 +27,7 @@ export default function DefaultPhotoSelector() {
         setPicLink((prev) => {
           return {
             ...prev,
-            profileURL : "https://github.com/shadcn.png"
+            profileURL : "https://res.cloudinary.com/dal2m6yhv/image/upload/v1712354320/babyyoda_pnl00l.jpg"
           }
         })
       break
@@ -35,7 +35,7 @@ export default function DefaultPhotoSelector() {
         setPicLink((prev) => {
           return {
             ...prev,
-            profileURL : "https://github.com/shadcn.png"
+            profileURL : "https://res.cloudinary.com/dal2m6yhv/image/upload/v1712354319/anonymous_oxgmb6.jpg"
           }
         })
       break
@@ -43,7 +43,7 @@ export default function DefaultPhotoSelector() {
         setPicLink((prev) => {
           return {
             ...prev,
-            profileURL : "https://github.com/shadcn.png"
+            profileURL : "https://res.cloudinary.com/dal2m6yhv/image/upload/v1712354321/cowboy_wnm3cx.jpg"
           }
         })
       break

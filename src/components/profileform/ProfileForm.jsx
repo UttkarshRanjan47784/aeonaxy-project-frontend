@@ -18,7 +18,7 @@ export default function ProfileForm() {
     const [extraInfo, setExtraInfo] = useRecoilState(optionalInfo);
     const reqInfo = useRecoilValue(requiredInfo)
     const navigate = useNavigate();
-    const [allow, setAllow] = useState(false)
+    const [uploading, setUploading] = useState(false)
 
     const handleOpenExplorer = (event) => {
         event.preventDefault()
@@ -35,6 +35,7 @@ export default function ProfileForm() {
                 }
             })
             //backend
+            setUploading(true)
             const formData = new FormData();
             formData.append(`file`, event.target.files[0]);
             formData.append(`username`, reqInfo.username);
@@ -47,14 +48,14 @@ export default function ProfileForm() {
                         profileURL : response.data.msg
                     }
                 })
-                setAllow(true)
+                setUploading(false)
             }
             if (!response.data.stat){
-                throw new Error(response.data.msg)
+                throw new Error(response.data.msg);
             }
         } catch (error) {
             alert(`Op failed : ${error.message}`)
-            setAllow(false);
+            setUploading(false);
             setExtraInfo({...oldValue})
         }
     }
@@ -103,7 +104,7 @@ export default function ProfileForm() {
             <h3 className='font-bold text-lg'>Add your Location</h3>
             <InputB placeholder='Enter a location' className='mt-6'  value={extraInfo.location}
             onChange={handleLocChange} />
-            <Button className='mt-8 w-36' disabled={extraInfo.profileURL.length == 0} onClick={handleGoToReasons}>Next</Button>
+            <Button className='mt-8 w-36' disabled={extraInfo.profileURL.length == 0 || uploading} onClick={handleGoToReasons}>{uploading? `Uploading...`: `Next`}</Button>
         </div>
     </form>
   )

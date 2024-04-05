@@ -20,8 +20,22 @@ export default function VerifyMailMessage() {
     }
   }
 
-  const handleResend = async () => {
-    let response = await axios.post(`${baseurl}/sendverification`, {})
+  const handleResend = async () => { 
+    try {
+      let completeInfo = {
+        ...reqInfo, 
+        ...extraInfo,
+        reason1 : reasonList.includes(1),
+        reason2 : reasonList.includes(2),
+        reason3 : reasonList.includes(3),
+        verified : false,
+      }
+      let response = await axios.post(`${baseurl}/sendverification`, completeInfo);
+      if (!response.data.stat)
+        throw new Error(response.data.msg);
+    } catch (error) {
+      alert(`Error : ${error.message}`)
+    }
   }
 
 

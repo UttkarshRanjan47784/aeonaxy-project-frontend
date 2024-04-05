@@ -24,7 +24,7 @@ export default function SignUpForm() {
     const [name, setName] = useState(``);
     const [email, setEmail] = useState(``);
     const [password, setPassword] = useState(``);
-    const [loading, setLoding] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const [userInfo, setUserInfo] = useRecoilState(requiredInfo)
 
@@ -92,6 +92,7 @@ export default function SignUpForm() {
             stat: false,
             msg: ``
         })
+        setLoading(true)
         let userReqInfo = {
             name : name,
             username : username,
@@ -106,10 +107,18 @@ export default function SignUpForm() {
         });
         if (response.data.stat){
             setUserInfo(userReqInfo)
+            setLoading(false)
             navigate(`/createprofile`)
         }
-        else
+        else{
+            setLoading(false)
+            if (response.data.msg == `duplicate key value violates unique constraint "userinfo_username_key"`)
+                setErr({
+                    stat: true,
+                    msg: `username`
+                })
             alert(`Operations failed : ${response.data.msg}`)
+        }
     }
 
     const handleNameChange = (event) => {setName(event.target.value)}
@@ -141,7 +150,7 @@ export default function SignUpForm() {
         <div className='space-y-1 my-3'>
             <Label><TriangleAlert color="#db4242" 
             className={(err.stat && err.msg=='password')?'size-5 mr-1 inline-block' : 'hidden size-5 mr-1'}/>Password</Label>
-            <Input onChange={handlePasswordChange} value={password} placeholder="6+ characters"/>
+            <Input onChange={handlePasswordChange} type="password" value={password} placeholder="6+ characters"/>
         </div>
         <div className='my-3'>
             <div className='flex items-start space-x-3'>
@@ -152,7 +161,7 @@ export default function SignUpForm() {
                 </div>
             </div>
         </div>
-        <Button className='w-1/2 my-3' disabled={(agree == false)} onClick={handleGoToCreateProfile}>{loading?<Ellipsis />:`Sign Up`}</Button>
+        <Button className='w-1/2 my-3' disabled={(agree == false || loading)} onClick={handleGoToCreateProfile}>{loading?`Signing You Up...`:`Sign Up`}</Button>
         <div className='my-3 text-xs'>Disclaimer : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a erat sit amet mi viverra dapibus id eget quam. Fusce in magna leo. Aenean aliquet mauris sit amet hendrerit auctor. </div>
     </form>
   )
